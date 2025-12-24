@@ -1,0 +1,643 @@
+/* --- 1. VARIABLES & RESET --- */
+:root {
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --text-primary: #f8fafc;
+    --text-secondary: #fcfcfc;
+    --accent: #fcfcfc;
+    --success: #22c55e;
+    --font-hand: 'Caveat', cursive;
+    --font-main: 'Inter', sans-serif;
+    --font-code: 'Fira Caveat', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    /* IMPORTANTE: Sin background-color sólido para ver las imágenes de fondo */
+}
+
+/* --- 2. FONDOS Y ATMÓSFERA --- */
+
+/* Capa 1: Imagen de fondo (PC) */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -2;
+    background: url('../assets/banner_ojos.JPG') no-repeat center center/cover;    
+    filter: blur(20px) brightness(0.4); 
+    transform: scale(1.1);
+}
+
+/* Capa 1: Imagen de fondo (Móvil) */
+@media (max-width: 768px) {
+    body::before {
+        background-image: url('../assets/banner_ojos_vertical_2.JPG');
+    }
+}
+
+/* Capa 2: Rejilla Tecnológica */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    background-image: 
+        linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background: radial-gradient(circle at center, transparent 60%, rgba(242, 187, 200, 0.1) 180%);
+    opacity: 0.8;
+}
+
+.section {
+    margin-bottom: 4rem; /* Espaciado consistente entre secciones */
+}
+
+
+
+/* --- 3. LAYOUT & TIPOGRAFÍA --- */
+
+/* Clase contenedora principal */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+h1 {
+    /* Estilos base, el .main-title sobreescribe lo necesario */
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+/* --- 4. BIENVENIDA (HERO) --- */
+
+.welcome-section {
+    min-height: 100vh; /* Ocupa toda la pantalla al inicio */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 2rem;
+}
+
+.hero-content {
+    max-width: 700px;
+    z-index: 2;
+}
+
+/* Avatar Circular */
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+
+.avatar-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #EEB2C2;
+    box-shadow: 0 0 25px #f2bbc8;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatar-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(167, 139, 250, 0.8);
+}
+
+/* Título Animado (Aurora) */
+.main-title {
+    font-size: 5rem;
+    font-weight: 200;
+    margin-bottom: 2rem;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    
+    background: linear-gradient(
+        to right,
+        #F5C5C8, #a78bfa, #FAA2AA, #f472b6, #F5C5C8
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: shine 5s linear infinite;
+    filter: drop-shadow(0 0 10px #faa2aa);
+}
+
+.highlight-name {
+    /* Hereda los estilos del padre, pero aseguramos peso */
+    font-weight: 200;
+}
+
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+.hero-text p {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.signature {
+    margin-top: 2rem;
+    font-family: var(--font-code);
+    color: var(--accent);
+    font-size: 0.9rem;
+}
+
+/* --- 5. COMPONENTES GENERALES --- */
+
+/* Cajas de texto (Intro, etc) */
+.intro-section {
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 8px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    overflow-wrap: break-word;
+    
+}
+
+/* Mensaje Codificado */
+.secret-section {
+    text-align: center;
+    
+}
+.main-secret-title{
+    font-size: 2.5rem;
+    font-weight: 200;
+    margin-bottom: 2rem;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    
+    background: linear-gradient(
+        to right,
+        #F5C5C8, #a78bfa, #FAA2AA, #f472b6, #F5C5C8
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: shine 5s linear infinite;
+    filter: drop-shadow(0 0 10px #faa2aa);
+}
+.morse-text {
+    font-family: var(--font-hand);
+    background: #0000004d;
+    padding: 1.5rem;
+    border-radius: 8px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    overflow-wrap: break-word; /* Evita que se salga el texto en móvil */
+}
+
+/* Botones */
+.btn-primary {
+    background: var(--accent);
+    color: #0f172a;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+/* --- 6. TIMELINE & SCROLL WRAPPER --- */
+.main-historia-title{
+    font-size: 2.5rem;
+    font-weight: 200;
+    margin-bottom: 2rem;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    
+    background: linear-gradient(
+        to right,
+        #F5C5C8, #a78bfa, #FAA2AA, #f472b6, #F5C5C8
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: shine 5s linear infinite;
+    filter: drop-shadow(0 0 10px #faa2aa);
+}
+.timeline-section {
+    /* Espacio para la sección */
+}
+
+.scroll-list__wrp {
+    width: 100%;
+    font-family: 'Courier New', monospace;
+    max-height: 700px; 
+    overflow-y: auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: inset 0px 0px 20px rgba(0,0,0,0.5);
+    background-image: linear-gradient(147deg, #faa2a97e 0%, #f5c5c873 74%);
+    border: 1px solid rgba(56, 189, 248, 0.1);
+    margin-bottom: 2rem;
+}
+
+/* Scrollbar personalizada */
+.scroll-list__wrp::-webkit-scrollbar { width: 8px; }
+.scroll-list__wrp::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); border-radius: 4px; }
+.scroll-list__wrp::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 4px; border: 2px solid rgba(15, 23, 42, 0.5); }
+
+/* Timeline Visual */
+.timeline {
+    position: relative;
+    border-left: 2px solid var(--accent);
+    margin-left: 10px;
+    padding-left: 20px;
+}
+
+.timeline-item {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    /* Ajustamos un poco la posición y tamaño para que quepan bien los iconos */
+    left: -40px; 
+    top: 0px;
+    width: 30px;  /* Hacemos el círculo un poco más grande */
+    height: 30px;
+    
+    border-radius: 50%; /* Mantiene la forma circular */
+    
+    /* Color de fondo para el icono (por si es transparente) y borde */
+    background-color: #fff; 
+    border: 3px solid var(--accent); /* Mantiene el borde rosa/neón */
+    
+    /* Configuración para que la imagen se centre y no se repita */
+    background-size: 80%; /* El icono ocupará el 80% del círculo */
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Sombra/Resplandor rosa para que combine con el resto del sitio */
+    box-shadow: 0 0 10px var(--accent);
+    z-index: 2;
+}
+
+.item-inicio::before {
+    /* Asegúrate de que el nombre del archivo sea correcto */
+    background-image: url('../assets/gtito_1.PNG'); 
+}
+
+/* Gatito para 'El Conflicto' */
+.item-conflicto::before {
+    background-image: url('../assets/gtito_2.PNG');
+}
+
+/* Gatito para 'Hoy' */
+.item-hoy::before {
+    background-image: url('../assets/gtito_3.PNG');
+}
+
+/* Opcional: Un pequeño efecto al pasar el mouse por el texto */
+.timeline-item:hover::before {
+    transform: scale(1.1) rotate(-10deg); /* El gatito se hace grande y se inclina un poco */
+    transition: transform 0.3s ease;
+}
+
+.date {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* --- 7. GALERÍA --- */
+.fotos_section { 
+    text-align: center; 
+    font-family: 'Caveat', cursive; 
+}
+
+.photo-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.polaroid {
+    background: white;
+    padding: 10px 10px 30px 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transform: rotate(-3deg);
+    transition: transform 0.3s ease;
+    width: 140px;
+    text-align: center;
+}
+
+.polaroid:nth-child(even) { transform: rotate(3deg); }
+.polaroid:hover { transform: scale(1.1) rotate(0deg); z-index: 10; background: rgb(255, 255, 255);
+    box-shadow: 0 10px 40px rgba(244, 114, 182, 0.4); /* Resplandor rosa */
+    z-index: 10;
+    border-color: #faa2aa;}
+.polaroid img { width: 100%; height: auto; display: block; filter: sepia(20%); }
+
+.caption {
+    color: #333;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* --- 8. MUSIC & FOOTER --- */
+.music-section, .playlist-section { 
+    text-align: center; 
+    font-family: 'Courier New', monospace;
+}
+
+.spotify-wrapper {
+    margin-top: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    transition: transform 0.3s;
+}
+
+.spotify-wrapper:hover { transform: translateY(-5px); }
+
+/* --- 9. DESPEDIDA --- */
+.future-section {
+    padding: 2.5rem;
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(145deg, #f5c5c8e7, #d79080d3);
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+
+}
+
+.future-section_1 {
+    padding: 2.5rem;
+    background: linear-gradient(145deg, #f5c5c8e7, #d79080d3);
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+
+}
+
+.final-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+
+}
+
+.btn-whatsapp {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+    background-color: #20bd5a;
+}
+
+.nota-final {
+    margin-top: 25px;
+    font-size: 0.8rem;
+    color: #2F2F2F;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+footer {
+    text-align: center;
+    padding: 3rem 0;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+}
+
+/* Media Queries Finales */
+@media (max-width: 768px) {
+    .main-title { font-size: 3rem; }
+    .avatar-img { width: 150px; height: 150px; }
+}
+
+/* --- ORBES FLOTANTES PASTEL --- */
+.dream-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px); /* Difuminado extremo */
+    z-index: -1; /* Detrás del contenido, delante del fondo */
+    opacity: 0.4; /* Sutil */
+    animation: floatOrb 20s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+    width: 500px; height: 500px;
+    background: #f9b1c7; /* Rosa */
+    top: 10%; left: -200px;
+}
+
+.orb-2 {
+    width: 500px; height: 500px;
+    background: #b1f6f9; /* Azul */
+    top: -30%; left: 1400px;
+}
+
+@media (max-width: 768px) {
+    .orb-1 {
+        /* Reducimos el tamaño a la mitad o lo que prefieras */
+        width: 200px; 
+        height: 200px;
+        
+        /* Opcional: Reducir el blur en móvil para que se note más la forma */
+        filter: blur(50px); 
+        
+        /* Ajuste de posición si sientes que estorba */
+        top: 0%; 
+        left: -40px; 
+    }
+
+    .orb-2 {
+        width: 180px; height: 180px;
+        filter: blur(40px);
+
+        top: 830px;
+        left: 300px;
+    }
+    
+}
+
+
+
+@keyframes floatOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.2); }
+}
+
+::selection {
+    background-color: var(--accent); /* Tu rosa/neón */
+    color: #0f172a; /* Texto oscuro para contraste */
+}
+
+/* --- INTERACTIVIDAD MENSAJE --- */
+/* Cuando el mensaje ya está traducido (detectaremos esto si tiene el borde verde),
+   cambiamos el cursor para indicar que se puede hacer clic para volver */
+.morse-text[style*="var(--success)"] {
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Un pequeño efecto al pasar el mouse sobre el mensaje traducido */
+.morse-text[style*="var(--success)"]:hover {
+    transform: scale(1.02);
+    background-color: rgba(56, 189, 248, 0.15) !important; /* Un poquito más brillante */
+}
+
+/* --- JUEGO BASKETBALL --- */
+.game-section {
+    text-align: center;
+    /* Evita que al arrastrar la pelota se mueva la pantalla en el celular */
+    touch-action: none; 
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 500px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.05); /* Fondo sutil */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden; /* Para que la pelota no se salga del cuadro */
+    cursor: grab;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+#score-board {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-family: var(--font-code);
+    font-size: 1.5rem;
+    color: var(--accent);
+    font-weight: bold;
+    z-index: 10;
+}
+
+#hoop {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4rem; /* Tamaño de la canasta */
+    z-index: 1;
+}
+
+/* Colisionadores invisibles (para que la pelota choque con los bordes del aro) */
+#rim-collision-left, #rim-collision-right {
+    position: absolute;
+    top: 110px; /* Ajustar según la altura del emoji de canasta */
+    width: 10px;
+    height: 10px;
+    background: transparent; /* Hazlo 'red' para verlos y calibrar */
+    border-radius: 50%;
+}
+#rim-collision-left { left: calc(50% - 35px); }
+#rim-collision-right { left: calc(50% + 25px); }
+
+#ball {
+    position: absolute;
+    bottom: 50px;
+    left: calc(50% - 25px); /* Centrado (mitad del ancho de la pelota) */
+    font-size: 3rem;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    user-select: none; /* No se puede seleccionar el texto */
+    cursor: grab;
+    z-index: 5;
+    transition: transform 0.1s; /* Para rotación suave */
+}
+
+#ball:active {
+    cursor: grabbing;
+}
+
+/* Animación cuando encestas */
+.score-anim {
+    animation: popScore 0.3s ease-out;
+    color: var(--success) !important;
+}
+
+@keyframes popScore {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1); }
+}
